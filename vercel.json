@@ -1,6 +1,6 @@
 {
   "build": {
-    "src": "django_app_name/wsgi.py",
+    "src": "cw_project/wsgi.py",
     "use": "@vercel/python"
   },
   "routes": [
