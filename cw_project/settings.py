@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "challenge-weekbier-81vgbmi70-gotrah.vercel.app",
+    "*",
 ]
 
 
