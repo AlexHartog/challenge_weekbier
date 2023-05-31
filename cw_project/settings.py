@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,6 @@ SECRET_KEY = 'django-insecure-fuz7xb%^28pkx$cyi&!j75k6#0e!ljp&9%*a3qnh7top2sdk82
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "challenge-weekbier-81vgbmi70-gotrah.vercel.app",
     "*",
 ]
 
@@ -87,8 +87,15 @@ WSGI_APPLICATION = 'cw_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': config('DB_ENGINE'),
+        'OPTIONS': {
+            'options': f'-c search_path={config("DB_SCHEMA")}',
+        },
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
