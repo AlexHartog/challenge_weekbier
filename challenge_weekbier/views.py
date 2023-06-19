@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from .forms import CheckinForm
 
+from datetime import date
 
 def home(request):
     """The home page for Challenge Weekbier."""
@@ -9,16 +10,21 @@ def home(request):
 
 
 def new_checkin(request):
+    print("New checkin")
     """Add a new checkin."""
     if request.method != 'POST':
-        # No data submitted; create a blank form.
-        form = CheckinForm()
+        # No data submitted; create a form with date initialised to today.
+        initial_data = {'date': date.today().strftime('%Y-%m-%d'), 'place': 'Test'}
+        form = CheckinForm(initial=initial_data)
+
+        print('Form: ', form)
     else:
         # Post data submitted; process data.
         form = CheckinForm(data=request.POST)
+        print('Form: ', form)
         if form.is_valid():
             form.save()
-            return redirect('challenge_weekbier:home')
+            # return redirect('challenge_weekbier:home')
 
     # Display a blank or invalid form.
     context = {'form': form}
