@@ -15,7 +15,6 @@ def home(request):
 
 
 def new_checkin(request):
-    print("New checkin")
     """Add a new checkin."""
     if request.method != 'POST':
         # No data submitted; create a form with date initialised to today.
@@ -30,7 +29,7 @@ def new_checkin(request):
 
     # Display a blank or invalid form.
     context = {'form': form}
-    return render(request, 'challenge_weekbier/new_checkin.html', context)
+    return render(request, 'challenge_weekbier/home.html', context)
 
 
 def standings(request):
@@ -41,8 +40,6 @@ def standings(request):
 def checkins(request):
     """Show the checkins."""
     checkins = Checkin.objects.order_by('-date')
-    for checkin in checkins:
-        print(checkin)
     context = {'checkins': checkins}
     return render(request, 'challenge_weekbier/checkins.html', context)
 
@@ -67,17 +64,19 @@ def upload_csv(request):
                 place = row[3]
                 city = row[4]
 
-                print("Checkin date: " + str(checkin_date) + " for  " + player_name)
+                # Get player, or create if it doesn't exist
+                this_player = Player.objects.filter(name=player_name)
+                if this_player.exists():
+                    player = this_player.first()
+                else:
+                    player = Player(name=player_name)
+                    player.save()
 
-                player = Player(name=player_name)
-                player.save()
                 checkin = Checkin(date_added=date_added, player=player, date=checkin_date, place=place, city=city)
                 checkin.save()
 
             return render(request, 'challenge_weekbier/upload_csv.html', {'form': form})
 
-        else:
-            print(form.errors)
     else:
         form = CSVUploadForm()
     return render(request, 'challenge_weekbier/upload_csv.html', {'form': form})

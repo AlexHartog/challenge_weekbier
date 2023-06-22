@@ -9,7 +9,7 @@ app_name = 'challenge_weekbier'
 
 urlpatterns = [
     # Home Page
-    path('', views.home, name='home'),
+    path('', views.new_checkin, name='home'),
     path('new_checkin', views.new_checkin, name='new_checkin'),
     path('standings', views.standings, name='standings'),
     path('checkins', views.checkins, name='checkins'),

@@ -1,13 +1,15 @@
-{% extends 'challenge_weekbier/base.html' %}
+{% extends "challenge_weekbier/base.html" %}
 {% load django_bootstrap5 %}
 
 {% block page_header %}
-  <div class="p-3 mb-4 bg-light border rounded-3">
-    <div class="container-fluid py-4">
-      <h1 class="display-3">Challenge weekbier</h1>
-
-      <p class="lead">Hier kunnen we straks dingen invoeren</p>
-    </div>
-  </div>
+  <h2>Voeg een check-in toe</h2>
 {% endblock page_header %}
 
+{% block content %}
+  <form action="{% url 'challenge_weekbier:home' %}" method='post'>
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="Add" %}
+  </form>
+
+{% endblock content %}
