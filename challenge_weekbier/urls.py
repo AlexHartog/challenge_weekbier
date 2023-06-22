@@ -13,4 +13,5 @@ urlpatterns = [
     path('new_checkin', views.new_checkin, name='new_checkin'),
     path('standings', views.standings, name='standings'),
     path('checkins', views.checkins, name='checkins'),
+    path('upload_csv', views.upload_csv, name='upload_csv'),
 ]

@@ -22,3 +22,7 @@ class CheckinForm(forms.ModelForm):
         widgets = {
             'date': forms.widgets.DateInput(attrs={'type': 'date'}, format="%d/%m/%Y"),
         }
+
+
+class CSVUploadForm(forms.Form):
+    csv_file = forms.FileField(label='CSV bestand')
