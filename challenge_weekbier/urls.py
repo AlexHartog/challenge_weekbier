@@ -1,4 +1,4 @@
-"""Defines the URL patterns for learning logs."""
+"""Defines the URL patterns for challenge weekbier."""
 
 from django.urls import path
 from django.contrib import admin
