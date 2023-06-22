@@ -11,5 +11,6 @@ urlpatterns = [
     # Home Page
     path('', views.home, name='home'),
     path('new_checkin', views.new_checkin, name='new_checkin'),
-    # path('admin/', admin.site.urls),
+    path('standings', views.standings, name='standings'),
+    path('checkins', views.checkins, name='checkins'),
 ]

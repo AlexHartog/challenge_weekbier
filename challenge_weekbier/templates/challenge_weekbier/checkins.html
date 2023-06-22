@@ -1,0 +1,23 @@
+{% extends "challenge_weekbier/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block page_header %}
+  <h2>Check-ins</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <ul class="list-group">
+    {% for checkin in checkins %}
+      <li class="list-group-item">
+        <p>{{ checkin.date_added|date:'M d, Y H:i' }}</p>
+        <p>{{ checkin.player }}</p>
+        <p>{{ checkin.place }}</p>
+        <p>{{ checkin.city }}</p>
+        <p>{{ checkin.date }}</p>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No check-ins have been added yet.</li>
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
