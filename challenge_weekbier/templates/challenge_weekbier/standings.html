@@ -6,6 +6,13 @@
 {% endblock page_header %}
 
 {% block content %}
-Hier komt de stand te staan
+  <ul class="list-group">
+    {% for player in players %}
+        <p>{{ player.name }} heeft een bepaald aantal punten</p>
+      </li>
+    {% empty %}
+      <li class="list-group-item">Er bestaan nog geen spelers.</li>
+    {% endfor %}
+  </ul>
 
 {% endblock content %}

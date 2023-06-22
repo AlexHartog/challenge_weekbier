@@ -34,7 +34,9 @@ def new_checkin(request):
 
 def standings(request):
     """Show the standings."""
-    return render(request, 'challenge_weekbier/standings.html')
+    players = Player.objects.all()
+    context = {'players': players}
+    return render(request, 'challenge_weekbier/standings.html', context)
 
 
 def checkins(request):
