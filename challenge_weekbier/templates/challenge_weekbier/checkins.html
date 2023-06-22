@@ -8,7 +8,7 @@
 {% block content %}
   <ul class="list-group">
     {% for checkin in checkins %}
-        <p>[{{checkin.date}} {{ checkin.player }} - {{ checkin.place }} in {{ checkin.city }}</p>
+        <p>[{{checkin.date}}] {{ checkin.player }} - {{ checkin.place }} in {{ checkin.city }}</p>
       </li>
     {% empty %}
       <li class="list-group-item">No check-ins have been added yet.</li>

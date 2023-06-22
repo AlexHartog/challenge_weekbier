@@ -21,4 +21,4 @@ class Checkin(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return f"{self.player.name} checked in at {self.date_added}"
+        return f"{self.player.name} checked in for {self.date} at {self.place} in {self.city} at {self.date_added}"
