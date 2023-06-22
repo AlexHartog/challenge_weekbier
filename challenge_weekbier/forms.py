@@ -18,7 +18,7 @@ class CheckinForm(forms.ModelForm):
     class Meta:
         model = Checkin
         fields = ['player', 'date', 'place', 'city']
-        labels = {'text': ''}
+        labels = {'player': 'Naam', 'date': 'Datum', 'place': 'Etablissement', 'city': 'Plaats'}
         widgets = {
             'date': forms.widgets.DateInput(attrs={'type': 'date'}, format="%d/%m/%Y"),
         }
