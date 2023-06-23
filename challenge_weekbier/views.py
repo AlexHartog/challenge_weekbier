@@ -49,7 +49,7 @@ def checkins(request):
 def upload_csv(request):
     def excel_date_conversion(serial_number):
         base_date = datetime.datetime(1900, 1, 1)
-        return (base_date + datetime.timedelta(days=serial_number-3)).date()
+        return (base_date + datetime.timedelta(days=serial_number-2)).date()
 
     if request.method == 'POST':
         form = CSVUploadForm(request.POST, request.FILES)
@@ -58,7 +58,7 @@ def upload_csv(request):
             reader = csv.reader(csv_file.read().decode('utf-8').splitlines())
 
             next(reader)  # Skip the header row
-
+            # TODO: Move this to a function
             for row in reader:
                 date_added = row[0]
                 player_name = row[1]
