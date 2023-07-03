@@ -1,0 +1,26 @@
+.player-scores-table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.player-scores-table th,
+.player-scores-table td {
+  padding: 10px;
+}
+
+.player-scores-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.player-scores-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.player-scores-table tbody tr:hover {
+  background-color: #e6e6e6;
+}
+
+.player-scores-table tbody td:first-child {
+  text-align: left;
+}

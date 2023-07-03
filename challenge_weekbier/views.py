@@ -34,7 +34,7 @@ def new_checkin(request):
 
 def standings(request):
     """Show the standings."""
-    players = Player.objects.all()
+    players = sorted(Player.objects.all(), key=lambda player: player.score(), reverse=True)
     context = {'players': players}
     return render(request, 'challenge_weekbier/standings.html', context)
 

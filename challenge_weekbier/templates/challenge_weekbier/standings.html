@@ -6,13 +6,25 @@
 {% endblock page_header %}
 
 {% block content %}
-  <ul class="list-group">
-    {% for player in players %}
-        <p>{{ player.name }} heeft {{ player.num_checkins }} checkins in {{ player.num_weeks_scored }} weken voor een score van {{ player.score }}.</p>
-      </li>
-    {% empty %}
-      <li class="list-group-item">Er bestaan nog geen spelers.</li>
-    {% endfor %}
-  </ul>
+  <table class="player-scores-table">
+    <thead>
+      <tr>
+        <th>Naam</th>
+        <th>Score</th>
+        <th>Check-ins</th>
+        <th>Weken gescoord</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for player in players %}
+        <tr>
+          <td>{{ player.name }}</td>
+          <td>{{ player.score }}</td>
+          <td>{{ player.num_checkins }}</td>
+          <td>{{ player.num_weeks_scored }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 {% endblock content %}
