@@ -47,7 +47,8 @@ def checkins(request):
 
 
 def upload_csv(request):
-    def excel_date_conversion(serial_number):
+    def excel_date_conversion(serial_string):
+        serial_number = int(serial_string.replace(",", "").replace(".", "")[:5])
         base_date = datetime.datetime(1900, 1, 1)
         return (base_date + datetime.timedelta(days=serial_number-2)).date()
 
@@ -62,7 +63,7 @@ def upload_csv(request):
             for row in reader:
                 date_added = row[0]
                 player_name = row[1]
-                checkin_date = excel_date_conversion(int(row[2]))
+                checkin_date = excel_date_conversion(row[2])
                 place = row[3]
                 city = row[4]
 
