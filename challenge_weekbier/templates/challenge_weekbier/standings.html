@@ -8,7 +8,7 @@
 {% block content %}
   <ul class="list-group">
     {% for player in players %}
-        <p>{{ player.name }} heeft een bepaald aantal punten</p>
+        <p>{{ player.name }} heeft {{ player.num_checkins }} checkins in {{ player.num_weeks_scored }} weken voor een score van {{ player.score }}.</p>
       </li>
     {% empty %}
       <li class="list-group-item">Er bestaan nog geen spelers.</li>
