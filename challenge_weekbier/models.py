@@ -54,7 +54,10 @@ class Checkin(models.Model):
         if Checkin.objects.filter(player=self.player, date__lt=self.date, city=self.city).count() > 0:
             return self.Status.DUPLICATE_CITY
         elif Checkin.objects.filter(player=self.player, date=self.date, date_added__lt=self.date_added).count() > 0:
-            return self.Status.DOUBLE_CHECKIN_ON_DATE
+            return self.Status.DUPLICATE_CHECKIN_ON_DATE
+        elif (self.date + timedelta(days=1)).isocalendar()[1] == 1 and \
+                Checkin.objects.filter(player=self.player, date__lt=self.date).count() > 0:
+            return self.Status.DUPLICATE_FIRST_WEEK
         else:
             return self.Status.OK
 
@@ -68,4 +71,5 @@ class Checkin(models.Model):
     class Status(Enum):
         OK = "OK"
         DUPLICATE_CITY = "Duplicate city"
-        DOUBLE_CHECKIN_ON_DATE = "Double checkin on date"
+        DUPLICATE_CHECKIN_ON_DATE = "Duplicate checkin on date"
+        DUPLICATE_FIRST_WEEK = "Duplicate first week"
