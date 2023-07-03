@@ -8,6 +8,8 @@ class Player(models.Model):
     """A player participating in the challenge."""
     name = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
+    cached_score = None
+    valid_checkins = None
 
     def num_checkins(self):
         """Return the score of the player."""
@@ -15,17 +17,25 @@ class Player(models.Model):
 
     def num_weeks_scored(self):
         week_numbers = set()
-        valid_checkins = [checkin for checkin in self.checkin_set.all() if checkin.is_valid()]
-        for checkin in valid_checkins:
+        self.get_valid_checkins()
+        for checkin in self.valid_checkins:
             # Add one day to start the new week on Sunday
             week_numbers.add((checkin.date + timedelta(days=1)).isocalendar()[1])
 
         return len(week_numbers)
 
+    def get_valid_checkins(self):
+        if self.valid_checkins is None:
+            self.valid_checkins = [checkin for checkin in self.checkin_set.all() if checkin.is_valid()]
+
     def score(self):
-        """Return the score of the player."""
-        valid_checkins = [checkin for checkin in self.checkin_set.all() if checkin.is_valid()]
-        return self.num_weeks_scored() * 2 + len(valid_checkins)
+        if self.cached_score is None:
+            self.get_valid_checkins()
+            score = self.num_weeks_scored() * 2 + len(self.valid_checkins)
+            self.cached_score = score
+        else:
+            return self.cached_score
+        return score
 
     def __str__(self):
         """Return a string representation of the model."""
@@ -39,6 +49,7 @@ class Checkin(models.Model):
     place = models.CharField(max_length=200)
     city = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
+    cached_status = None
 
     def status(self):
         if Checkin.objects.filter(player=self.player, date__lt=self.date, city=self.city).count() > 0:
