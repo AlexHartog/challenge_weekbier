@@ -75,8 +75,12 @@ def upload_csv(request):
                     player = Player(name=player_name)
                     player.save()
 
-                checkin = Checkin(date_added=date_added, player=player, date=checkin_date, place=place, city=city)
-                checkin.save()
+                checkin_exists = Checkin.objects.filter(player=player, date=checkin_date,
+                                                        place=place, city=city).exists()
+
+                if not checkin_exists:
+                    checkin = Checkin(date_added=date_added, player=player, date=checkin_date, place=place, city=city)
+                    checkin.save()
 
             return render(request, 'challenge_weekbier/upload_csv.html', {'form': form})
 
