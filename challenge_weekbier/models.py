@@ -69,7 +69,7 @@ class Checkin(models.Model):
         return f"{self.player.name} checked in for {self.date} at {self.place} in {self.city} at {self.date_added}"
 
     class Status(Enum):
-        OK = "OK"
-        DUPLICATE_CITY = "Duplicate city"
-        DUPLICATE_CHECKIN_ON_DATE = "Duplicate checkin on date"
-        DUPLICATE_FIRST_WEEK = "Duplicate first week"
+        OK = ""
+        DUPLICATE_CITY = "Dubbele stad"
+        DUPLICATE_CHECKIN_ON_DATE = "Dubbele checkin op datum"
+        DUPLICATE_FIRST_WEEK = "Dubbele checkin in eerste week"

@@ -1,3 +1,31 @@
+.checkins-table {
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.checkins-table th,
+.checkins-table td {
+  padding: 10px;
+}
+
+.checkins-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.checkins-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.checkins-table tbody tr:hover {
+  background-color: #e6e6e6;
+}
+
+.checkins-table tbody td:first-child {
+  text-align: left;
+}
+
+
 .player-scores-table {
   border-collapse: collapse;
   text-align: center;
@@ -24,3 +52,4 @@
 .player-scores-table tbody td:first-child {
   text-align: left;
 }
+

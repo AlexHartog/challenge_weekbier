@@ -34,15 +34,15 @@ def new_checkin(request):
 
 def standings(request):
     """Show the standings."""
-    players = sorted(Player.objects.all(), key=lambda player: player.score(), reverse=True)
+    players = sorted(Player.objects.all(), key=lambda player: (player.num_weeks_scored(), player.score()), reverse=True)
     context = {'players': players}
     return render(request, 'challenge_weekbier/standings.html', context)
 
 
 def checkins(request):
     """Show the checkins."""
-    checkins = Checkin.objects.order_by('-date')
-    context = {'checkins': checkins}
+    all_checkins = Checkin.objects.order_by('-date')
+    context = {'checkins': all_checkins}
     return render(request, 'challenge_weekbier/checkins.html', context)
 
 

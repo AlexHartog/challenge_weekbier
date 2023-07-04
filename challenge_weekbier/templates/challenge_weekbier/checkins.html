@@ -6,13 +6,27 @@
 {% endblock page_header %}
 
 {% block content %}
-  <ul class="list-group">
-    {% for checkin in checkins %}
-        <p>[{{checkin.date}}] {{ checkin.player }} - {{ checkin.place }} in {{ checkin.city }} ({{ checkin.status.value }})</p>
-      </li>
-    {% empty %}
-      <li class="list-group-item">Er zijin nog geen check-ins.</li>
-    {% endfor %}
-  </ul>
+  <table class="checkins-table">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Naam</th>
+        <th>Etablissement</th>
+        <th>Plaats</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for checkin in checkins %}
+        <tr>
+          <td>{{ checkin.date }}</td>
+          <td>{{ checkin.player }}</td>
+          <td>{{ checkin.place }}</td>
+          <td>{{ checkin.city }}</td>
+          <td>{{ checkin.status.value }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 {% endblock content %}
