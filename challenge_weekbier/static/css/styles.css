@@ -53,3 +53,6 @@
   text-align: left;
 }
 
+#id_player, #id_date, #id_place, #id_city {
+    max-width: 250px;
+}

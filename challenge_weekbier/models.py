@@ -5,6 +5,8 @@ from django.db import models
 
 
 class Player(models.Model):
+    FIRST_WEEK_CUTOFF = "2023-01-08"
+
     """A player participating in the challenge."""
     name = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
@@ -26,13 +28,17 @@ class Player(models.Model):
 
     def get_valid_checkins(self):
         if self._valid_checkins is None:
-            self._valid_checkins = [checkin for checkin in self.checkin_set.all() if checkin.is_valid()]
+            distinct_city_checkins = self.checkin_set.order_by("player", "city", "date").distinct("player", "city")
+            distinct_date_checkins = distinct_city_checkins.order_by("player", "date", "date_added").distinct("player", "date")
+            self._valid_checkins = distinct_date_checkins
 
         return self._valid_checkins
 
     def get_score_checkins(self):
         if self._score_checkins is None:
-            self._score_checkins = [checkin for checkin in self.checkin_set.all() if checkin.gives_points()]
+            first_week_checkin = self._valid_checkins.filter(date__lt=self.FIRST_WEEK_CUTOFF).distinct("player")
+            other_checkins = self._valid_checkins.filter(date__gte=self.FIRST_WEEK_CUTOFF)
+            self._score_checkins = first_week_checkin.union(other_checkins)
 
         return self._score_checkins
 
