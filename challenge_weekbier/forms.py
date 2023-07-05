@@ -26,3 +26,8 @@ class CheckinForm(forms.ModelForm):
 
 class CSVUploadForm(forms.Form):
     csv_file = forms.FileField(label='CSV bestand')
+
+
+class CheckinsFilterForm(forms.Form):
+    player = forms.CharField(required=False, label='Speler')
+    city = forms.CharField(required=False, label='Plaats')

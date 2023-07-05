@@ -10,9 +10,9 @@ class Player(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     _score = None
     _valid_checkins = None
+    _score_checkins = None
 
     def num_checkins(self):
-        """Return the score of the player."""
         return len(self.get_valid_checkins())
 
     def num_weeks_scored(self):
@@ -30,9 +30,15 @@ class Player(models.Model):
 
         return self._valid_checkins
 
+    def get_score_checkins(self):
+        if self._score_checkins is None:
+            self._score_checkins = [checkin for checkin in self.checkin_set.all() if checkin.gives_points()]
+
+        return self._score_checkins
+
     def score(self):
         if self._score is None:
-            self._score = self.num_weeks_scored() * 2 + len(self.get_valid_checkins())
+            self._score = self.num_weeks_scored() * 2 + len(self.get_score_checkins())
 
         return self._score
 
@@ -62,6 +68,9 @@ class Checkin(models.Model):
             return self.Status.OK
 
     def is_valid(self):
+        return self.status() in [self.Status.OK, self.Status.DUPLICATE_FIRST_WEEK]
+
+    def gives_points(self):
         return self.status() == self.Status.OK
 
     def __str__(self):

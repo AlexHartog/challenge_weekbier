@@ -3,7 +3,7 @@ import datetime
 
 from django.shortcuts import render, redirect
 
-from .forms import CheckinForm, CSVUploadForm
+from .forms import CheckinForm, CSVUploadForm, CheckinsFilterForm
 from .models import Checkin, Player
 
 from datetime import date
@@ -40,9 +40,18 @@ def standings(request):
 
 
 def checkins(request):
-    """Show the checkins."""
+    filter_form = CheckinsFilterForm(request.GET)
+
     all_checkins = Checkin.objects.order_by('-date')
-    context = {'checkins': all_checkins}
+    if filter_form.is_valid():
+        player = filter_form.cleaned_data.get('player')
+        city = filter_form.cleaned_data.get('city')
+        if player:
+            all_checkins = all_checkins.filter(player__name=player)
+        if city:
+            all_checkins = all_checkins.filter(city=city)
+
+    context = {'form': filter_form, 'checkins': all_checkins}
     return render(request, 'challenge_weekbier/checkins.html', context)
 
 
