@@ -6,7 +6,7 @@
 {% endblock page_header %}
 
 {% block content %}
-  <form method="GET" action="{% url 'challenge_weekbier:checkins' %}">
+  <form method="GET" action="{% url 'checkins' %}">
     {{ form.as_p }}
     <button type="submit">Filter</button>
   </form>

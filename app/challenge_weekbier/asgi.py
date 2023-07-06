@@ -1,5 +1,5 @@
 """
-ASGI config for cw_project project.
+ASGI config for challenge_weekbier project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cw_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'challenge_weekbier.settings')
 
 application = get_asgi_application()

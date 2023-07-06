@@ -15,7 +15,7 @@
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'challenge_weekbier:home' %}">
+      <a class="navbar-brand" href="{% url 'home' %}">
           Challenge: weekbier</a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -27,17 +27,14 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'challenge_weekbier:new_checkin' %}">
+            <a class="nav-link" href="{% url 'new_checkin' %}">
               Nieuwe check-in</a></li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'challenge_weekbier:standings' %}">
+            <a class="nav-link" href="{% url 'standings' %}">
               Stand</a></li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'challenge_weekbier:checkins' %}">
+            <a class="nav-link" href="{% url 'checkins' %}">
               Check-ins</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'challenge_weekbier:upload_csv' %}">
-              Upload CSV</a></li>
         </ul> <!-- End of links on left side of navbar -->
       </div> <!-- Closes collapsible parts of navbar -->
 

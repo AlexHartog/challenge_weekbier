@@ -25,7 +25,7 @@ def new_checkin(request):
         form = CheckinForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('challenge_weekbier:home')
+            return redirect('home')
 
     # Display a blank or invalid form.
     context = {'form': form}

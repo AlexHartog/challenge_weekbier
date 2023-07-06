@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('place', models.CharField(max_length=200)),
                 ('city', models.CharField(max_length=200)),
                 ('date_added', models.DateTimeField(auto_now_add=True)),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='challenge_weekbier.player')),
+                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='app.player')),
             ],
         ),
     ]
