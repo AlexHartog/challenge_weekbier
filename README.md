@@ -15,3 +15,8 @@ DB_PASSWORD=password
 DB_HOST=host
 DB_PORT=port
 ```
+
+Make sure docker-compose is installed and run
+```bash
+docker-compose up
+```
