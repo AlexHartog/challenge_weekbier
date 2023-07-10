@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from .forms import CheckinForm, CSVUploadForm, CheckinsFilterForm
 from .models import Checkin, Player
 
-from datetime import date
+from datetime import date, timedelta
 
 
 def home(request):
@@ -53,6 +53,23 @@ def checkins(request):
 
     context = {'form': filter_form, 'checkins': all_checkins}
     return render(request, 'challenge_weekbier/checkins.html', context)
+
+
+def statistics(request):
+    players = Player.objects.all()
+
+    current_week_number = (date.today() + timedelta(days=1)).isocalendar()[1]
+    weeks = dict(sorted({num: {} for num in range(1, current_week_number + 1)}.items(), reverse=True))
+
+    for player in players:
+        for week_number in weeks.keys():
+            weeks[week_number][player.name] = 0
+        for checkin in player.get_valid_checkins():
+            week_number = (checkin.date + timedelta(days=1)).isocalendar()[1]
+            weeks[week_number][player.name] = weeks[week_number].get(player.name, 0) + 1
+
+    context = {'weeks': weeks, 'players': players, 'current_week_number': current_week_number}
+    return render(request, 'challenge_weekbier/statistics.html', context)
 
 
 def upload_csv(request):

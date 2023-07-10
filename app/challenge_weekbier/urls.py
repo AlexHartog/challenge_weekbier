@@ -13,4 +13,5 @@ urlpatterns = [
     path('standings', views.standings, name='standings'),
     path('checkins', views.checkins, name='checkins'),
     path('upload_csv', views.upload_csv, name='upload_csv'),
+    path('statistics', views.statistics, name='statistics'),
 ]

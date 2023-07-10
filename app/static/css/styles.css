@@ -56,3 +56,13 @@
 #id_player, #id_date, #id_place, #id_city {
     max-width: 250px;
 }
+
+.failed-week {
+  background-color: #FF7272;
+  font-weight: bold;
+}
+
+.success-week {
+  background-color: #29D45D;
+  font-weight: bold;
+}

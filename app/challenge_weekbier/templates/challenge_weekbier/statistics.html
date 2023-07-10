@@ -1,0 +1,31 @@
+{% extends "challenge_weekbier/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block page_header %}
+  <h2>Stats</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <h3>Per week</h3>
+  <table class="player-scores-table">
+    <thead>
+      <tr>
+        <th>Week</th>
+        {% for player in players %}
+          <th>{{ player.name }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for week_number, data in weeks.items %}
+        <tr>
+          <td>{{ week_number }}</td>
+          {% for _, item in data.items %}
+             <td {% if item > 0 %} class="success-week" {% elif week_number < current_week_number %} class="failed-week" {% endif %}>{{ item }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock content %}
