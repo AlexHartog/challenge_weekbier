@@ -66,6 +66,8 @@ def statistics(request):
             weeks[week_number][player.name] = 0
         for checkin in player.get_valid_checkins():
             week_number = (checkin.date + timedelta(days=1)).isocalendar()[1]
+            if week_number not in weeks.keys():
+                weeks[week_number] = {}
             weeks[week_number][player.name] = weeks[week_number].get(player.name, 0) + 1
 
     context = {'weeks': weeks, 'players': players, 'current_week_number': current_week_number}
