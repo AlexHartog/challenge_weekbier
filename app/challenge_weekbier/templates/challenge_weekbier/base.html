@@ -1,56 +1,28 @@
+{% load static tailwind_tags %}
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Challenge Weekbier</title>
 
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"/>
-  {% load django_bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
+  <script src="https://unpkg.com/htmx.org@1.9.6" integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni" crossorigin="anonymous"></script>
 
+  {% tailwind_css %}
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'home' %}">
-          Challenge: weekbier</a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  {% include "top_menu.html" %}
 
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'new_checkin' %}">
-              Nieuwe check-in</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'standings' %}">
-              Stand</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'checkins' %}">
-              Check-ins</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'statistics' %}">
-              Stats</a></li>
-        </ul> <!-- End of links on left side of navbar -->
-      </div> <!-- Closes collapsible parts of navbar -->
-
-    </div> <!-- Closes navbar's container -->
-  </nav> <!-- End of navbar -->
-
-  <main class="container">
-    <div class="pb-2 mb-2 border-bottom">
+  <main class="container mx-auto p-4">
+    <div class="pb-2 mb-2 border-b">
       {% block page_header %}{% endblock page_header %}
     </div>
 
-    <div>
+    <div class="mt-4">
       {% block content %}{% endblock content %}
     </div>
   </main>

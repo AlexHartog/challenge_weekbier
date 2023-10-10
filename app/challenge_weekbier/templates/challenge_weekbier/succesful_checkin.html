@@ -1,0 +1,23 @@
+{% extends "challenge_weekbier/base.html" %}
+
+{% block page_header %}
+  <h2 class="text-2xl font-semibold mb-4">Check-in Ingevoerd</h2>
+{% endblock page_header %}
+
+{% block content %}
+  <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+    <p class="font-bold">Succesvol!</p>
+    <p>Je hebt een check-in ingevoerd.</p>
+  </div>
+
+  <div class="text-lg mb-4">
+    <p>Wil je nog een check-in toevoegen? Klik op de onderstaande knop om in te voeren.</p>
+  </div>
+
+  <div>
+    <a href="{% url 'new_checkin' %}"
+       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Voeg nog een check-in toe
+    </a>
+  </div>
+{% endblock content %}

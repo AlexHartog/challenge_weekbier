@@ -1,0 +1,6 @@
+
+{% if checkin %}
+<div class="empty:hidden bg-red-100 border-l-4 border-red-500 text-xs text-red-700 p-4 mb-4">
+    {{ checkin.player.name }} already checked in at {{ checkin.place }} in {{ checkin.city }} on {{ checkin.date|date:"d-m-Y" }}
+</div>
+{% endif %}

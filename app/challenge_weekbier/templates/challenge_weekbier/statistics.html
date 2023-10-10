@@ -1,31 +1,37 @@
 {% extends "challenge_weekbier/base.html" %}
-{% load django_bootstrap5 %}
 
 {% block page_header %}
-  <h2>Stats</h2>
+  <h2 class="text-2xl font-semibold">Stats</h2>
 {% endblock page_header %}
 
 {% block content %}
-  <h3>Per week</h3>
-  <table class="player-scores-table">
-    <thead>
-      <tr>
-        <th>Week</th>
-        {% for player in players %}
-          <th>{{ player.name }}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for week_number, data in weeks.items %}
+  <h3 class="text-xl font-medium mb-4">Per week</h3>
+  <div class="overflow-x-auto">
+    <table class="table-auto bg-white border border-gray-300 divide-y divide-gray-300">
+      <thead class="bg-gray-50">
         <tr>
-          <td>{{ week_number }}</td>
-          {% for _, item in data.items %}
-             <td {% if item > 0 %} class="success-week" {% elif week_number < current_week_number %} class="failed-week" {% endif %}>{{ item }}</td>
+          <th class="w-1/10 py-3 text-xs lg:text-lg lg:px-6 text-gray-500 uppercase ">
+            Week
+          </th>
+          {% for player in players %}
+            <th class="w-1/10 py-3 text-xs lg:text-lg lg:px-6 text-gray-500 ">
+              {{ player.name }}
+            </th>
           {% endfor %}
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
+      </thead>
+      <tbody class="text-gray-700 divide-y divide-gray-300">
+        {% for week_number, data in weeks.items %}
+          <tr>
+            <td class="px-6 py-4">{{ week_number }}</td>
+            {% for _, item in data.items %}
+              <td class="px-6 py-4 {% if item > 0 %} bg-green-100 {% elif week_number < current_week_number %} bg-red-100 {% endif %}">
+                {{ item }}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock content %}

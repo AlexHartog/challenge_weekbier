@@ -1,37 +1,96 @@
 {% extends "challenge_weekbier/base.html" %}
-{% load django_bootstrap5 %}
 
 {% block page_header %}
-  <h2>Check-ins</h2>
+  <h2 class="text-2xl font-semibold mb-4">Check-ins</h2>
 {% endblock page_header %}
 
 {% block content %}
-  <form method="GET" action="{% url 'checkins' %}">
-    {{ form.as_p }}
-    <button type="submit">Filter</button>
-  </form>
 
-  <table class="checkins-table">
-    <thead>
-      <tr>
-        <th>Datum</th>
-        <th>Naam</th>
-        <th>Etablissement</th>
-        <th>Plaats</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for checkin in checkins %}
+  <div class="w-small w-2/3 py-10 text-gray-600">
+    <form id="filter_form" class="space-y-4">
+      <div>
+        <label for="filter_player" class="block text-gray-500 font-bold mb-0 pr-4">
+            Speler
+        </label>
+        <input
+          type="text"
+          id="filter_player"
+          name="filter_player"
+          hx-post="/filter_checkins/"
+          hx-trigger="keyup changed delay:250ms"
+          hx-target="#filter-checkins"
+          placeholder="Speler"
+          class="bg-white h-10 px-5 pr-10 rounded-full text-2xl focus:outline-none"
+        >
+      </div>
+
+      <div>
+        <label for="filter_place" class="block text-gray-500 font-bold mb-0 pr-4">
+            Etablissement
+        </label>
+        <input
+          type="text"
+          id="filter_place"
+          name="filter_place"
+          hx-post="/filter_checkins/"
+          hx-trigger="keyup changed delay:250ms"
+          hx-target="#filter-checkins"
+          placeholder="Etablissement"
+          class="bg-white h-10 px-5 pr-10 rounded-full text-2xl focus:outline-none"
+        >
+      </div>
+
+      <div>
+        <label for="filter_city" class="block text-gray-500 font-bold mb-0 pr-4">
+            Plaats
+        </label>
+        <input
+          type="text"
+          id="filter_city"
+          name="filter_city"
+          hx-post="/filter_checkins/"
+          hx-trigger="keyup changed delay:250ms"
+          hx-target="#filter-checkins"
+          placeholder="Plaats"
+          class="bg-white h-10 px-5 pr-10 rounded-full text-2xl focus:outline-none"
+        >
+      </div>
+    </form>
+
+    <span class="htmx-indicator">Searching...</span>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white divide-y divide-gray-200 border border-gray-300 rounded-md shadow">
+      <thead class="bg-gray-50">
         <tr>
-          <td>{{ checkin.date }}</td>
-          <td>{{ checkin.player }}</td>
-          <td>{{ checkin.place }}</td>
-          <td>{{ checkin.city }}</td>
-          <td>{{ checkin.status.value }}</td>
+          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+            Datum
+          </th>
+          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+            Naam
+          </th>
+          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+            Etablissement
+          </th>
+          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+            Plaats
+          </th>
+          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+            Status
+          </th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody id="filter-checkins" class="bg-white divide-y divide-gray-200 text-gray-900">
+        {% include "filter_checkins.html" %}
+      </tbody>
+    </table>
+  </div>
+
+    <script>
+      document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+      })
+    </script>
 
 {% endblock content %}

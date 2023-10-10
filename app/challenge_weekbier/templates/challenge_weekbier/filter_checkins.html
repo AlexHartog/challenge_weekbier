@@ -1,0 +1,19 @@
+{% for checkin in checkins %}
+  <tr class="transition duration-200 ease-in-out hover:bg-gray-100 odd:bg-white even:bg-slate-50">
+    <td class="py-2 px-4">
+      {{ checkin.date }}
+    </td>
+    <td class="py-2 px-4">
+      {{ checkin.player }}
+    </td>
+    <td class="py-2 px-4">
+      {{ checkin.place }}
+    </td>
+    <td class="py-2 px-4">
+      {{ checkin.city }}
+    </td>
+    <td class="py-2 px-4">
+      {{ checkin.status.value }}
+    </td>
+  </tr>
+{% endfor %}

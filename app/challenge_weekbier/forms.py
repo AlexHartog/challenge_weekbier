@@ -1,33 +1,34 @@
-from django import forms
 from datetime import date
 
+from django import forms
 
-from .models import Player, Checkin
+from .models import Checkin, Player
 
 
 class CheckinForm(forms.ModelForm):
-    #TODO: Can we use a ModelChoiceField for player?
-    #TODO: Can we get the data formatted correctly?
-
-    # date = forms.DateField(
-    #     input_formats=["%d/%m/%Y"],
-    #     widget=forms.DateInput(attrs={'type': 'date'}, format='%d/%m/%Y'),
-    #     initial=date.today()
-    # )
+    player = forms.ModelChoiceField(
+        queryset=Player.objects.all(),
+        label="Naam",
+        widget=forms.Select(attrs={"class": "form-select"}),
+    )
 
     class Meta:
         model = Checkin
-        fields = ['player', 'date', 'place', 'city']
-        labels = {'player': 'Naam', 'date': 'Datum', 'place': 'Etablissement', 'city': 'Plaats'}
+
+        fields = ["player", "date", "place", "city"]
+
+        labels = {
+            "player": "Naam",
+            "date": "Datum",
+            "place": "Etablissement",
+            "city": "Plaats",
+        }
         widgets = {
-            'date': forms.widgets.DateInput(attrs={'type': 'date'}, format="%d/%m/%Y"),
+            "date": forms.widgets.DateInput(attrs={"type": "date"}, format="%d/%m/%Y"),
+            "place": forms.widgets.TextInput(attrs={"class": "form-input"}),
+            "city": forms.widgets.TextInput(attrs={"class": "form-input"}),
         }
 
 
 class CSVUploadForm(forms.Form):
-    csv_file = forms.FileField(label='CSV bestand')
-
-
-class CheckinsFilterForm(forms.Form):
-    player = forms.CharField(required=False, label='Speler')
-    city = forms.CharField(required=False, label='Plaats')
+    csv_file = forms.FileField(label="CSV bestand")
