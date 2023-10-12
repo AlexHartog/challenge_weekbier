@@ -77,6 +77,18 @@ class CheckinManager(models.Manager):
             filtered_checkins = filtered_checkins.filter(city__icontains=city)
         return filtered_checkins
 
+    def filter_exact(self, player_id=None, player=None, place=None, city=None):
+        filtered_checkins = self.ordered_by_date()
+        if player_id:
+            filtered_checkins = filtered_checkins.filter(player=player_id)
+        if player:
+            filtered_checkins = filtered_checkins.filter(player__name__iexact=player)
+        if place:
+            filtered_checkins = filtered_checkins.filter(place__iexact=place)
+        if city:
+            filtered_checkins = filtered_checkins.filter(city__iexact=city)
+        return filtered_checkins
+
 
 class Checkin(models.Model):
     """A checkin for a player."""
