@@ -33,9 +33,11 @@
                        name="{{ field.name }}"
                         id="{{ field.id_for_label }}"
                         value="{{ field.value|default_if_none:'' }}"
-                        hx-post="/check_city/"
-                        hx-trigger="blur"
-                        hx-target="#validation-message"
+                        {% if field.name == 'city' %}
+                            hx-post="/check_city/"
+                            hx-trigger="keyup changed delay:250ms"
+                            hx-target="#validation-message"
+                        {% endif %}
                         class="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
                         {% if field.field.required %} required {% endif %}>
             {% endif %}
