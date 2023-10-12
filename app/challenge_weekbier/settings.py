@@ -52,8 +52,8 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     # Third party apps.
-    # "django_browser_reload",
-    # 'compressor',
+    "django_browser_reload",
+    # "compressor",
     # Default django apps.
     "django.contrib.admin",
     "django.contrib.auth",
@@ -64,7 +64,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -182,21 +182,18 @@ STATICFILES_DIRS = [
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# COMPRESS_ROOT = BASE_DIR / 'static'
+# COMPRESS_ROOT = BASE_DIR / "static"
 
 # COMPRESS_ENABLED = True
 
-# STATICFILES_FINDERS = ('compressor.finders.CompressorFinder', )
+# STATICFILES_FINDERS = ("compressor.finders.CompressorFinder",)
 
-# NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
+if os.getenv("NPM_BIN_PATH"):
+    NPM_BIN_PATH = os.getenv("NPM_BIN_PATH")
 TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-# NPM_BIN_PATH = "/usr/local/bin/npm"
-
-CRISPY_ALLOWED_TEMPLATED_PACKS = "tailwind"
-CRISPY_TEMPLATE_PACK = "tailwind"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
