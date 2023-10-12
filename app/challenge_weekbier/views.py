@@ -19,7 +19,7 @@ def new_checkin(request):
     """Add a new checkin."""
     if request.method != "POST":
         # No data submitted; create a form with date initialised to today.
-        initial_data = {"date": date.today().strftime("%Y-%m-%d"), "city": "Haarlem"}
+        initial_data = {"date": date.today().strftime("%Y-%m-%d")}
         form = CheckinForm(initial=initial_data)
     else:
         # Post data submitted; process data.
