@@ -147,7 +147,7 @@ def check_city(request):
     city = request.POST.get("city", None)
 
     if player_id and city:
-        checkin = Checkin.objects.filtered(player_id=player_id, city=city).first()
+        checkin = Checkin.objects.filter_exact(player_id=player_id, city=city).first()
     else:
         checkin = None
 
