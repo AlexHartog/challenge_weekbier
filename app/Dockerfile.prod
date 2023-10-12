@@ -1,28 +1,25 @@
-FROM python:3.9.6-alpine
+FROM python:3.9-slim-buster
 
-# create directory for the app user
-RUN mkdir -p /home/app
+# Set working directory and environment variables
+WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# create the app user
-RUN addgroup -S app && adduser -S app -G app
+RUN apt-get update
+RUN apt-get install -y ca-certificates curl gnupg
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 
-# create the appropriate directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
-RUN mkdir $APP_HOME/staticfiles
-WORKDIR $APP_HOME
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 
-COPY requirements.txt requirements.txt
+# Install Node.js
+RUN apt-get update
+RUN apt-get install -y nodejs
 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . $APP_HOME
+COPY . /app/
 
-# chown all the files to the app user
-RUN chown -R app:app $APP_HOME
+ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
 
-# change to the app user
-USER app

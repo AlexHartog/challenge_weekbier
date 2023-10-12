@@ -13,17 +13,23 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
-from decouple import config
+# from decouple import config
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-fuz7xb%^28pkx$cyi&!j75k6#0e!ljp&9%*a3qnh7top2sdk82"
+assert os.getenv(
+    "SECRET_KEY"
+), "Django SECRET_KEY not provided, please specify in .env file"
+SECRET_KEY = os.getenv("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,6 +41,10 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 
+if os.getenv("CSRF_TRUSTED_ORIGIN"):
+    CSRF_TRUSTED_ORIGINS.append(os.getenv("CSRF_TRUSTED_ORIGIN"))
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,10 +52,8 @@ INSTALLED_APPS = [
     "challenge_weekbier",
     "tailwind",
     "theme",
-    "crispy_forms",
-    "crispy_tailwind",
     # Third party apps.
-    "django_browser_reload",
+    # "django_browser_reload",
     # 'compressor',
     # Default django apps.
     "django.contrib.admin",
@@ -57,7 +65,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -94,18 +102,41 @@ WSGI_APPLICATION = "challenge_weekbier.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+#
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "OPTIONS": {
+#             "options": f'-c search_path={"beer_challenge"}',
+#         },
+#         "NAME": "beer_challenge",
+#         "USER": "django",
+#         "PASSWORD": "django_pw",
+#         "HOST": "192.168.1.102",
+#         "PORT": "5432",
+#     }
+# }
 
+# DB_ENGINE=
+# DB_SCHEMA=beer_challenge
+# DB_NAME=beer_challenge
+# DB_USER=django
+# DB_PASSWORD=django_pw
+# DB_HOST=192.168.1.102
+# DB_PORT=5432
+# }
+#
 DATABASES = {
     "default": {
-        "ENGINE": config("DB_ENGINE"),
+        "ENGINE": os.getenv("DB_ENGINE"),
         "OPTIONS": {
-            "options": f'-c search_path={config("DB_SCHEMA")}',
+            "options": f'-c search_path={os.getenv("DB_SCHEMA")}',
         },
-        "NAME": config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST"),
+        "PORT": os.getenv("DB_PORT"),
     }
 }
 
@@ -158,11 +189,12 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # STATICFILES_FINDERS = ('compressor.finders.CompressorFinder', )
 
-NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
+# NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
 TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+# NPM_BIN_PATH = "/usr/local/bin/npm"
 
 CRISPY_ALLOWED_TEMPLATED_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"

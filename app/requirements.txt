@@ -5,6 +5,8 @@ tzdata==2023.3
 psycopg2-binary==2.9.6
 python-decouple==3.8
 gunicorn==20.1.0
-tailwind
+django-tailwind[reload]
+django-browser-reload
 isort
 black
+python-dotenv
