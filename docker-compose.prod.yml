@@ -7,7 +7,7 @@ services:
         dockerfile: Dockerfile.prod
     command: gunicorn challenge_weekbier.wsgi:application --bind 0.0.0.0:5000
     volumes:
-      - static_volume:/app/web/staticfiles
+      - static_volume:/app/staticfiles
     expose:
       - 5000
     env_file:
@@ -16,7 +16,7 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/app/web/staticfiles
+      - static_volume:/app/staticfiles
     ports:
       - ${NGINX_PORT:-80}:80
     depends_on:
