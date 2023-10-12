@@ -42,7 +42,12 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontSize: {
+                '2xs': '0.7rem',
+                '3xs': '0.55rem',
+            }
+        },
     },
     plugins: [
         /**

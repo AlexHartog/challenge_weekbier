@@ -61,22 +61,22 @@
   </div>
 
   <div class="overflow-x-auto">
-    <table class="min-w-full bg-white divide-y divide-gray-200 border border-gray-300 rounded-md shadow">
+    <table class="table-auto w-full bg-white divide-y divide-gray-200 border border-gray-300 rounded-md shadow">
       <thead class="bg-gray-50">
         <tr>
-          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+          <th class="w-1/5 py-2 px-2 sm:px-4 text-left text-3xs sm:text-base font-medium text-gray-500 uppercase">
             Datum
           </th>
-          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+          <th class="w-1/5 py-2 px-2 sm:px-4 text-left text-3xs sm:text-base font-medium text-gray-500 uppercase">
             Naam
           </th>
-          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+          <th class="w-1/5 py-2 px-2 sm:px-4 text-left text-3xs sm:text-base font-medium text-gray-500 uppercase">
             Etablissement
           </th>
-          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+          <th class="w-1/5 py-2 px-2 sm:px-4 text-left text-3xs sm:text-base font-medium text-gray-500 uppercase">
             Plaats
           </th>
-          <th class="py-2 px-4 text-left text-xs font-medium text-gray-500 uppercase">
+          <th class="w-1/5 py-2 px-2 sm:px-4 text-left text-3xs sm:text-base font-medium text-gray-500 uppercase">
             Status
           </th>
         </tr>
@@ -92,5 +92,6 @@
         event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
       })
     </script>
+
 
 {% endblock content %}
