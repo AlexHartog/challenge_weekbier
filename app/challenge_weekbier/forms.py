@@ -1,5 +1,3 @@
-from datetime import date
-
 from django import forms
 
 from .models import Checkin, Player
