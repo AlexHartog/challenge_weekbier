@@ -2,9 +2,8 @@ import csv
 import datetime
 from datetime import date, timedelta
 
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
-from django.http import JsonResponse, HttpResponse
 
 from .forms import CheckinForm, CSVUploadForm
 from .models import Checkin, Player
