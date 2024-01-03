@@ -3,6 +3,8 @@ from enum import Enum
 
 from django.db import models
 
+STARTING_YEAR = 2023
+
 
 class Player(models.Model):
     FIRST_WEEK_CUTOFF = "2023-01-08"
@@ -18,13 +20,8 @@ class Player(models.Model):
         return len(self.get_valid_checkins())
 
     def num_weeks_scored(self):
-        week_numbers = set()
-
-        for checkin in self.get_valid_checkins():
-            # Add one day to start the new week on Sunday
-            week_numbers.add((checkin.date + timedelta(days=1)).isocalendar()[1])
-
-        return len(week_numbers)
+        """Count unique week numbers for this user."""
+        return len({checkin.week_number for checkin in self.get_valid_checkins()})
 
     def get_valid_checkins(self):
         if self._valid_checkins is None:
@@ -117,14 +114,20 @@ class Checkin(models.Model):
             > 0
         ):
             return self.Status.DUPLICATE_CHECKIN_ON_DATE
-        elif (self.date + timedelta(days=1)).isocalendar()[
-            1
-        ] == 1 and Checkin.objects.filter(
-            player=self.player, date__lt=self.date
-        ).count() > 0:
+        elif (
+            self.week_number == 1
+            and Checkin.objects.filter(player=self.player, date__lt=self.date).count()
+            > 0
+        ):
             return self.Status.DUPLICATE_FIRST_WEEK
         else:
             return self.Status.OK
+
+    @property
+    def week_number(self):
+        # Add one day to start the new week on Sunday
+        next_day = self.date + timedelta(days=1)
+        return next_day.isocalendar()[1] + (next_day.year - STARTING_YEAR) * 52
 
     def is_valid(self):
         return self.status() in [self.Status.OK, self.Status.DUPLICATE_FIRST_WEEK]
