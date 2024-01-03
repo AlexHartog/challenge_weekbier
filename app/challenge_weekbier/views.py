@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
 from .forms import CheckinForm, CSVUploadForm
-from .models import Checkin, Player
+from .models import Checkin, Player, STARTING_YEAR
 
 
 def home(request):
@@ -53,7 +53,10 @@ def checkins(request):
 def statistics(request):
     players = Player.objects.all()
 
-    current_week_number = (date.today() + timedelta(days=1)).isocalendar()[1]
+    next_day = date.today() + timedelta(days=1)
+    current_week_number = (
+        next_day.isocalendar()[1] + (next_day.year - STARTING_YEAR) * 52
+    )
     weeks = dict(
         sorted(
             {num: {} for num in range(1, current_week_number + 1)}.items(), reverse=True
@@ -64,7 +67,7 @@ def statistics(request):
         for week_number in weeks.keys():
             weeks[week_number][player.name] = 0
         for checkin in player.get_valid_checkins():
-            week_number = (checkin.date + timedelta(days=1)).isocalendar()[1]
+            week_number = checkin.week_number
             if week_number not in weeks.keys():
                 weeks[week_number] = {}
             weeks[week_number][player.name] = weeks[week_number].get(player.name, 0) + 1
